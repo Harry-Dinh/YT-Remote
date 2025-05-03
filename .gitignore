@@ -1,0 +1,6 @@
+**/.DS_Store
+
+# Ignore the userstate files in Xcode
+xcuserdata
+xcuserdata/*
+*.xcuserstate
