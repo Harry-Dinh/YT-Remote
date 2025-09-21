@@ -8,32 +8,44 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var tvCode = ""
-
-    var body: some View {
-        VStack(spacing: 20) {
-            codeTextField
-            navigationButtons
-        }
-        .padding()
+    @State private var macIP: String = ""
+    private var sender: SignalSender {
+        SignalSender(macIP: macIP)
     }
 
-    private var codeTextField: some View {
-        HStack {
-            TextField("Enter TV Code here...", text: $tvCode)
-                .textFieldStyle(.roundedBorder)
-
-            Button("Connect") {}
+    var body: some View {
+        NavigationStack {
+            VStack {
+                navigationButtons
+                    .padding()
+            }
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    ipAddressButton
+                }
+            }
         }
     }
 
     private var navigationButtons: some View {
-        Group {
-            Button("UP") {}
-            Button("DOWN") {}
-            Button("LEFT") {}
-            Button("RIGHT") {}
-            Button("SELECT") {}
+        VStack(spacing: 20) {
+            NavigationButton("chevron.up") { sender.send(signal: "UP") }
+            navigationButtonsHorizontal
+            NavigationButton("chevron.down") { sender.send(signal: "DOWN") }
+        }
+    }
+
+    private var navigationButtonsHorizontal: some View {
+        HStack(spacing: 20) {
+            NavigationButton("chevron.left") { sender.send(signal: "LEFT") }
+            NavigationButton("square") { sender.send(signal: "SELECT") }
+            NavigationButton("chevron.right") { sender.send(signal: "RIGHT") }
+        }
+    }
+
+    private var ipAddressButton: some View {
+        Button(action: {}) {
+            Image(systemName: "ellipsis.rectangle")
         }
     }
 }
