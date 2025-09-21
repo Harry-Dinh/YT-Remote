@@ -41,7 +41,7 @@ struct ContentView: View {
     private var navigationButtonsHorizontal: some View {
         HStack(spacing: 20) {
             NavigationButton("chevron.left") { sender.send(signal: "LEFT") }
-            NavigationButton("square") { sender.send(signal: "SELECT") }
+            NavigationButton("square") { sender.send(signal: "RETURN") }
             NavigationButton("chevron.right") { sender.send(signal: "RIGHT") }
         }
     }
@@ -54,9 +54,9 @@ struct ContentView: View {
 
     private var actionButtons: some View {
         HStack {
-            ActionButton(.backButton) {}
+            ActionButton(.backButton) { sender.send(signal: "ESCAPE") }
             Spacer()
-            ActionButton(.playPauseButton) {}
+            ActionButton(.playPauseButton) { sender.send(signal: "F8") }
             Spacer()
             ActionButton(.contextMenuButton) {}
         }
