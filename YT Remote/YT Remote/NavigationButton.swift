@@ -28,6 +28,7 @@ struct NavigationButton: View {
 
             Button(action: action) {
                 buttonLabel
+                    .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 20))
             }
         } else {
             Button(action: action) {

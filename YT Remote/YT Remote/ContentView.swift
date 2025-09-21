@@ -24,6 +24,9 @@ struct ContentView: View {
                     ipAddressButton
                 }
             }
+            .safeAreaInset(edge: .bottom) {
+                actionButtons
+            }
         }
     }
 
@@ -47,6 +50,17 @@ struct ContentView: View {
         Button(action: {}) {
             Image(systemName: "ellipsis.rectangle")
         }
+    }
+
+    private var actionButtons: some View {
+        HStack {
+            ActionButton(.backButton) {}
+            Spacer()
+            ActionButton(.playPauseButton) {}
+            Spacer()
+            ActionButton(.contextMenuButton) {}
+        }
+        .padding(.horizontal)
     }
 }
 
