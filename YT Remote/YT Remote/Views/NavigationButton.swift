@@ -8,24 +8,16 @@
 import SwiftUI
 
 struct NavigationButton: View {
-    var icon: String
+    var buttonModel: NavigationButtonModel
     var action: () -> Void
 
-    init(_ icon: String, action: @escaping () -> Void) {
-        self.icon = icon
+    init(_ buttonModel: NavigationButtonModel, action: @escaping () -> Void) {
+        self.buttonModel = buttonModel
         self.action = action
     }
 
     var body: some View {
         if #available(iOS 26, *) {
-            //            Button(action: action) {
-            //                Image(systemName: icon)
-            //                    .font(.system(size: 80))
-            //                    .padding()
-            //            }
-            //            .buttonStyle(.glass)
-            //            .buttonBorderShape(.roundedRectangle(radius: 15))
-
             Button(action: action) {
                 buttonLabel
                     .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 20))
@@ -43,7 +35,7 @@ struct NavigationButton: View {
                 .fill(Color(.systemGray3))
                 .frame(width: 120, height: 120)
 
-            Image(systemName: icon)
+            Image(systemName: buttonModel.rawValue)
                 .font(.system(size: 80))
                 .fontWeight(.medium)
                 .foregroundStyle(.white)
@@ -52,5 +44,5 @@ struct NavigationButton: View {
 }
 
 #Preview {
-    NavigationButton("chevron.up") {}
+    NavigationButton(.up) {}
 }
