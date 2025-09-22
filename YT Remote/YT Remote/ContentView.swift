@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var macIP: String = ""
+    @State private var showIPEnterScreen = false
     private var sender: SignalSender {
         SignalSender(macIP: macIP)
     }
@@ -26,6 +27,9 @@ struct ContentView: View {
             }
             .safeAreaInset(edge: .bottom) {
                 actionButtons
+            }
+            .sheet(isPresented: $showIPEnterScreen) {
+                IPEditScreen(macIP: $macIP)
             }
         }
     }
@@ -47,7 +51,9 @@ struct ContentView: View {
     }
 
     private var ipAddressButton: some View {
-        Button(action: {}) {
+        Button(action: {
+            showIPEnterScreen = true
+        }) {
             Image(systemName: "ellipsis.rectangle")
         }
     }
