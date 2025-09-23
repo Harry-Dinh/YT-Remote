@@ -26,4 +26,8 @@ class ServerManager {
         server?.stop()
         server = nil
     }
+
+    func isServerActive() -> Bool {
+        return server != nil
+    }
 }

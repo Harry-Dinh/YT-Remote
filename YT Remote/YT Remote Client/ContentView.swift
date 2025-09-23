@@ -8,69 +8,82 @@
 import SwiftUI
 
 struct ContentView: View {
-    private let instructionsText =
-    """
-    1. Get the IP address of this computer, you can do so with the command below in a terminal session
-    2. Enter the IP address into the YT Remote app on your iPhone or iPad
-    3. Enjoy!
-    """
+    @Bindable var serverManager: ServerManager
+
+    @State private var confirmStoppingServer = false
+    @State private var toggleServer = false
+
+    init(_ serverManager: ServerManager) {
+        self.serverManager = serverManager
+    }
 
     var body: some View {
-        HStack {
-            sidebarView
+        VStack {
+            Form {
+                serverStatusSection
+                ipSection
+            }
+            .formStyle(.grouped)
 
             Divider()
-
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Instructions")
-                    .font(.title3)
-                    .fontWeight(.bold)
-                ipAddressSection
+        }
+        .onChange(of: toggleServer) {
+            if toggleServer {
+                serverManager.startServer()
+            } else {
+                confirmStoppingServer = true
             }
         }
-        .padding()
-    }
-
-    private var ipAddressSection: some View {
-        Group {
-            Text(instructionsText)
-                .padding(.horizontal)
-            terminalCommandBox
+        .alert("Confirm Stopping Server?", isPresented: $confirmStoppingServer) {
+            Button("No", role: .cancel) {}
+            Button("Yes", role: .destructive) {
+                serverManager.stopServer()
+                toggleServer = false
+            }
         }
     }
 
-    private var terminalCommandBox: some View {
-        GroupBox {
-            Text("ipconfig getifaddr en0")
-                .fontDesign(.monospaced)
-        }
-        .padding()
-    }
-
-    private var stopServerButton: some View {
-        Button(action: {}) {
-            Text("Stop Server")
-        }
-    }
-
-    private var openYouTubeTVButton: some View {
-        Button(action: {}) {
-            Text("Launch YouTube TV")
+    private var serverStatusSection: some View {
+        Section {
+            Toggle(isOn: $toggleServer) {
+                HStack {
+                    Image(systemName: "circle.fill")
+                        .foregroundStyle(serverManager.isServerActive() ? Color.green : Color.red)
+                    Text(serverManager.isServerActive() ? "Server is Running" : "Server is Inactive")
+                }
+            }
+        } footer: {
+            Button("Launch YouTube TV") {}
         }
     }
 
-    private var sidebarView: some View {
-        VStack {
-            Text("YT Remote Client")
-                .font(.title)
-                .fontWeight(.bold)
+    private var ipSection: some View {
+        Section {
+            formRow(
+                title: "Wi-Fi Address",
+                info: WebServer.getComputerIPAddress() ?? "Unavailable",
+                infoFontDesign: .monospaced
+            )
+        } header: {
+            Text("Connection Information")
+        } footer: {
+            Button("Show Address...") {}
+        }
+    }
 
-            openYouTubeTVButton
-            stopServerButton
+    // MARK: - Subviews
+
+    private func formRow(title: String, info: String, infoFontDesign: Font.Design = .default) -> some View {
+        HStack {
+            Text(title)
+            Spacer()
+            Text(info)
+                .foregroundStyle(.secondary)
+                .fontDesign(infoFontDesign)
         }
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(ServerManager())
 }

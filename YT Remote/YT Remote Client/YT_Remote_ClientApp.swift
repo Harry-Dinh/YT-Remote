@@ -13,9 +13,11 @@ struct YT_Remote_ClientApp: App {
 
     var body: some Scene {
         Window("YT Remote Client", id: "clientApp") {
-            ContentView()
-                .onAppear(perform: serverManager.startServer)
-                .onDisappear(perform: serverManager.stopServer)
+            ContentView(serverManager)
+                .onDisappear {
+                    // Quit the app upon closing the window
+                    NSApplication.shared.terminate(nil)
+                }
         }
         .windowToolbarStyle(.unified)
         .windowToolbarLabelStyle(fixed: .titleAndIcon)
