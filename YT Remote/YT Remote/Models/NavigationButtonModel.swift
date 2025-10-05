@@ -13,17 +13,10 @@ enum NavigationButtonModel: String {
     case `return` = "square"
 }
 
-func signalFor(buttonModel: NavigationButtonModel) -> String {
-    switch buttonModel {
-        case .up:
-            return "UP"
-        case .down:
-            return "DOWN"
-        case .left:
-            return "LEFT"
-        case .right:
-            return "RIGHT"
-        case .return:
-            return "RETURN"
-    }
+enum NavigationButtonSignal {
+    static let up = "UP"
+    static let down = "DOWN"
+    static let left = "LEFT"
+    static let right = "RIGHT"
+    static let `return` = "RETURN"
 }

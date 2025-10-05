@@ -10,3 +10,9 @@ enum ActionButtonModel: String {
     case playPauseButton = "playpause"
     case contextMenuButton = "filemenu.and.cursorarrow"
 }
+
+enum ActionButtonSignal {
+    static let back = "ESCAPE"
+    static let playPause = "F8"
+    static let contextMenu = "CONTEXT"
+}

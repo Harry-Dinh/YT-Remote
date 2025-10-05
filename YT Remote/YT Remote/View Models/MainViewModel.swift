@@ -13,7 +13,6 @@ class MainViewModel {
     var showVolumeControls = true
     var volumeControlsPosition: VolumeControlsPosition = .right
     var macIP = ""
-    var isMacIPEmpty: Bool {
-        macIP.isEmpty
-    }
+    var showKeyboardSearchAlert = false
+    var searchText = ""
 }
