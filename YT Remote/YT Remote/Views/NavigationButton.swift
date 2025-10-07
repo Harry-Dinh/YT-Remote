@@ -16,17 +16,39 @@ struct NavigationButton: View {
         self.action = action
     }
 
+    @State private var buttonPressed = false
+
     var body: some View {
-        if #available(iOS 26, *) {
-            Button(action: action) {
-                buttonLabel
-                    .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 20))
-            }
-        } else {
-            Button(action: action) {
-                buttonLabel
+        Group {
+            if #available(iOS 26, *) {
+                Button(action: action) {
+                    buttonLabel
+                        .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 20))
+                }
+            } else {
+                Button(action: action) {
+                    buttonLabel
+                }
             }
         }
+        .simultaneousGesture(
+            // Handle the haptic behaviour
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in
+                    if !buttonPressed {
+                        buttonPressed = true
+                        let lightGenerator = UIImpactFeedbackGenerator(style: .light)
+                        lightGenerator.impactOccurred()
+                    }
+                }
+                .onEnded { _ in
+                    if buttonPressed {
+                        let mediumGenerator = UIImpactFeedbackGenerator(style: .medium)
+                        mediumGenerator.impactOccurred()
+                    }
+                    buttonPressed = false
+                }
+        )
     }
 
     private var buttonLabel: some View {

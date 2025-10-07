@@ -19,8 +19,6 @@ struct ContentView: View {
                 navigationButtons
                     .disabled(viewModel.macIP.isEmpty)
             }
-            .navigationTitle(viewModel.macIP.isEmpty ? "Not Connected" : "")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     settingsButton
@@ -32,6 +30,11 @@ struct ContentView: View {
 
                 ToolbarItem(placement: .primaryAction) {
                     keyboardButton
+                }
+
+                ToolbarItemGroup(placement: .secondaryAction) {
+                    disconnectFromMacButton
+                    exitYouTubeTVButton
                 }
             }
             .safeAreaInset(edge: .bottom) {
@@ -146,6 +149,32 @@ struct ContentView: View {
             viewModel.showKeyboardSearchAlert = true
         }) {
             Image(systemName: "magnifyingglass")
+        }
+    }
+
+    private var exitYouTubeTVButton: some View {
+        Button(role: .destructive, action: {}) {
+            Label("Exit YouTube TV", systemImage: "xmark.rectangle")
+        }
+    }
+
+    private var disconnectFromMacButton: some View {
+        Button(role: .destructive, action: {
+            viewModel.showDisconnectConfirmation = true
+        }) {
+            Label("Disconnect from Mac", systemImage: "network.slash")
+        }
+        .disabled(viewModel.macIP.isEmpty)
+        .confirmationDialog("Disconnect from Mac?", isPresented: $viewModel.showDisconnectConfirmation) {
+            Button(role: .destructive) {
+                viewModel.macIP.removeAll()
+            } label: {
+                Text("Disconnect")
+            }
+
+            Button(role: .cancel, action: {}) {
+                Text("Cancel")
+            }
         }
     }
 

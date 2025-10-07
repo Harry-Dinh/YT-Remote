@@ -16,17 +16,38 @@ struct ActionButton: View {
         self.action = action
     }
 
+    @State private var buttonPressed = false
+
     var body: some View {
-        if #available(iOS 26, *) {
-            Button(action: action) {
-                buttonLabel
-                    .glassEffect(.regular.interactive())
-            }
-        } else {
-            Button(action: action) {
-                buttonLabel
+        Group {
+            if #available(iOS 26, *) {
+                Button(action: action) {
+                    buttonLabel
+                        .glassEffect(.regular.interactive())
+                }
+            } else {
+                Button(action: action) {
+                    buttonLabel
+                }
             }
         }
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in
+                    if !buttonPressed {
+                        buttonPressed = true
+                        let haptic = UIImpactFeedbackGenerator(style: isBackButton ? .medium : .light)
+                        haptic.impactOccurred()
+                    }
+                }
+                .onEnded { _ in
+                    if buttonPressed {
+                        let haptic = UIImpactFeedbackGenerator(style: isBackButton ? .heavy : .medium)
+                        haptic.impactOccurred()
+                    }
+                    buttonPressed = false
+                }
+        )
     }
 
     private var buttonLabel: some View {
@@ -49,6 +70,10 @@ struct ActionButton: View {
 
     private var iconYOffset: CGFloat {
         icon == .contextMenuButton ? 5 : 0
+    }
+
+    private var isBackButton: Bool {
+        icon == .backButton
     }
 }
 

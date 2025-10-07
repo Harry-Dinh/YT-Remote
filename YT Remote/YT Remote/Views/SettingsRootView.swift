@@ -20,9 +20,16 @@ struct SettingsRootView: View {
         NavigationStack {
             Form {
                 Section {
+                    connectionHeader
+
                     NavigationLink(destination: IPEditScreen(macIP: $viewModel.macIP)) {
                         Text("Edit IP Address")
                     }
+                }
+
+                Section {
+                    disconnectButton
+                    quitYouTubeButton
                 }
 
                 Section {
@@ -54,6 +61,54 @@ struct SettingsRootView: View {
         Button(action: dismiss.callAsFunction) {
             Image(systemName: "checkmark")
         }
+    }
+
+    private var connectionHeader: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text("Connection Status")
+                .font(.headline)
+
+            HStack {
+                Image(systemName: "circle.fill")
+                    .imageScale(.small)
+                    .foregroundStyle(isMacIPEmpty ? Color.red : Color.green)
+
+                Text(isMacIPEmpty ? "Not Connected" : "Connected to Mac")
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    private var disconnectButton: some View {
+        Button(role: .destructive, action: {
+            viewModel.showDisconnectConfirmation = true
+        }) {
+            Text("Disconnect from Mac")
+        }
+        .disabled(isMacIPEmpty)
+        .confirmationDialog("Disconnect from Mac?", isPresented: $viewModel.showDisconnectConfirmation) {
+            Button(role: .destructive) {
+                viewModel.macIP.removeAll()
+            } label: {
+                Text("Disconnect")
+            }
+
+            Button(role: .cancel, action: {}) {
+                Text("Cancel")
+            }
+        }
+    }
+
+    private var quitYouTubeButton: some View {
+        Button(role: .destructive, action: {}) {
+            Text("Exit YouTube TV")
+        }
+    }
+
+    // MARK: - Helper Functions and Properties
+
+    private var isMacIPEmpty: Bool {
+        viewModel.macIP.isEmpty
     }
 }
 
