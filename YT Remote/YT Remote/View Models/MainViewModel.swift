@@ -15,4 +15,5 @@ class MainViewModel {
     var macIP = ""
     var showKeyboardSearchAlert = false
     var searchText = ""
+    var showDisconnectConfirmation = false
 }

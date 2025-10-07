@@ -159,8 +159,22 @@ struct ContentView: View {
     }
 
     private var disconnectFromMacButton: some View {
-        Button(role: .destructive, action: {}) {
+        Button(role: .destructive, action: {
+            viewModel.showDisconnectConfirmation = true
+        }) {
             Label("Disconnect from Mac", systemImage: "network.slash")
+        }
+        .disabled(viewModel.macIP.isEmpty)
+        .confirmationDialog("Disconnect from Mac?", isPresented: $viewModel.showDisconnectConfirmation) {
+            Button(role: .destructive) {
+                viewModel.macIP.removeAll()
+            } label: {
+                Text("Disconnect")
+            }
+
+            Button(role: .cancel, action: {}) {
+                Text("Cancel")
+            }
         }
     }
 

@@ -80,10 +80,23 @@ struct SettingsRootView: View {
     }
 
     private var disconnectButton: some View {
-        Button(role: .destructive, action: { viewModel.macIP.removeAll() }) {
+        Button(role: .destructive, action: {
+            viewModel.showDisconnectConfirmation = true
+        }) {
             Text("Disconnect from Mac")
         }
         .disabled(isMacIPEmpty)
+        .confirmationDialog("Disconnect from Mac?", isPresented: $viewModel.showDisconnectConfirmation) {
+            Button(role: .destructive) {
+                viewModel.macIP.removeAll()
+            } label: {
+                Text("Disconnect")
+            }
+
+            Button(role: .cancel, action: {}) {
+                Text("Cancel")
+            }
+        }
     }
 
     private var quitYouTubeButton: some View {
