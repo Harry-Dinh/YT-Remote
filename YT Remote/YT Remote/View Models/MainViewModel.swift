@@ -16,4 +16,7 @@ class MainViewModel {
     var showKeyboardSearchAlert = false
     var searchText = ""
     var showDisconnectConfirmation = false
+    var showManualConnectionScreen = false
+    var passcode = ""
+    var customPortNumber = ""
 }

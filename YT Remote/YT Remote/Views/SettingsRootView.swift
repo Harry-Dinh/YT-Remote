@@ -22,8 +22,8 @@ struct SettingsRootView: View {
                 Section {
                     connectionHeader
 
-                    NavigationLink(destination: IPEditScreen(macIP: $viewModel.macIP)) {
-                        Text("Edit IP Address")
+                    NavigationLink(destination: QRCodeScannerView(viewModel)) {
+                        Text("Connect to Mac")
                     }
                 }
 
