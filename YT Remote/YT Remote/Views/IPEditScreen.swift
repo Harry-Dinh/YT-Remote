@@ -13,8 +13,6 @@ struct IPEditScreen: View {
     @Environment(\.dismiss) private var dismiss
     @FocusState private var isFieldFocused: Bool
 
-    @AppStorage("defaultPortPreference") private var useCustomPort = false
-
     init(_ viewModel: MainViewModel) {
         self.viewModel = viewModel
     }
@@ -22,10 +20,29 @@ struct IPEditScreen: View {
     var body: some View {
         NavigationStack {
             Form {
-                firstSection
-                secondSection
+                listRow(title: "IP Address") {
+                    TextField("XXX.YYY.Z.A", text: $viewModel.macIP)
+                        .multilineTextAlignment(.trailing)
+                        .fontDesign(.monospaced)
+                        .keyboardType(.decimalPad)
+                        .focused($isFieldFocused, equals: true)
+                }
+
+                listRow(title: "Passcode") {
+                    TextField("XXYYZZ", text: $viewModel.passcode)
+                        .multilineTextAlignment(.trailing)
+                        .fontDesign(.monospaced)
+                        .keyboardType(.numberPad)
+                }
+
+                listRow(title: "Port") {
+                    TextField("XXXX", text: $viewModel.customPortNumber)
+                        .multilineTextAlignment(.trailing)
+                        .fontDesign(.monospaced)
+                        .keyboardType(.numberPad)
+                }
             }
-            .navigationTitle("Connect Manually")
+            .navigationTitle("Manual Connection")
             .navigationBarTitleDisplayMode(.inline)
             .scrollDismissesKeyboard(.interactively)
             .toolbar {
@@ -37,47 +54,6 @@ struct IPEditScreen: View {
                     doneButton
                 }
             }
-        }
-    }
-
-    private var firstSection: some View {
-        Section {
-            listRow(title: "IP Address") {
-                TextField("XXX.YYY.Z.A", text: $viewModel.macIP)
-                    .multilineTextAlignment(.trailing)
-                    .fontDesign(.monospaced)
-                    .keyboardType(.decimalPad)
-                    .focused($isFieldFocused, equals: true)
-            }
-
-            listRow(title: "Passcode") {
-                TextField("XXYYZZ", text: $viewModel.passcode)
-                    .multilineTextAlignment(.trailing)
-                    .fontDesign(.monospaced)
-                    .keyboardType(.numberPad)
-            }
-        }
-    }
-
-    private var secondSection: some View {
-        Section {
-            Toggle(isOn: $useCustomPort) {
-                Text("Use Custom Port")
-            }
-
-            if useCustomPort {
-                listRow(title: "Custom Port Number") {
-                    TextField("XXXX", text: $viewModel.customPortNumber)
-                        .multilineTextAlignment(.trailing)
-                        .fontDesign(.monospaced)
-                        .keyboardType(.numberPad)
-                }
-            }
-
-        } header: {
-            Text("Port")
-        } footer: {
-            Text("Leave this off to use the default port of 8080.")
         }
     }
 

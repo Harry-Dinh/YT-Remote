@@ -19,4 +19,5 @@ class MainViewModel {
     var showManualConnectionScreen = false
     var passcode = ""
     var customPortNumber = ""
+    var currentConnection: YTRMConnection?
 }
