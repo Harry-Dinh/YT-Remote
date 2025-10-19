@@ -17,6 +17,7 @@ class ServerManager {
     var qrCode: NSImage?
     var qrCodeGeneratingInProgress = false
     var startListening = false
+    var showConnectionDetail = false
 
     func startServer() {
         do {

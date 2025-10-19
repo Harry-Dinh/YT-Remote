@@ -26,6 +26,13 @@ struct YT_Remote_ClientApp: App {
                 Button("Launch YouTube TV") {}
                     .keyboardShortcut("Y")
             }
+
+            CommandGroup(replacing: .sidebar) {
+                Button("Show Connection Detail") {
+                    serverManager.showConnectionDetail = true
+                }
+                .disabled(!serverManager.startListening)
+            }
         }
     }
 }

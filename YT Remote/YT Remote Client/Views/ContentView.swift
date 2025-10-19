@@ -24,6 +24,9 @@ struct ContentView: View {
         }
         .formStyle(.grouped)
         .frame(width: 400, height: 450)
+        .sheet(isPresented: $serverManager.showConnectionDetail) {
+            ConnectionDetailView(serverManager)
+        }
     }
 
     private var connectionStatusSection: some View {
@@ -56,11 +59,9 @@ struct ContentView: View {
 
     @ViewBuilder
     private var extraActionsSection: some View {
-        if serverManager.startListening {
-            Section("Other Actions") {
-                rowView(title: "YouTube TV") {
-                    Button("Launch") {}
-                }
+        Section("Other Actions") {
+            rowView(title: "YouTube TV") {
+                Button("Launch") {}
             }
         }
     }
@@ -98,7 +99,9 @@ struct ContentView: View {
 
     private var connectionGuideFooter: some View {
         Group {
-            Button("Manual Connection") {}
+            Button("Connection Detail") {
+                serverManager.showConnectionDetail = true
+            }
         }
     }
 
