@@ -398,7 +398,7 @@
 		2198BAFC2E65412600FD5FD8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = YTRemoteIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "YT Remote/YT_Remote.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -443,7 +443,7 @@
 		2198BAFD2E65412600FD5FD8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = YTRemoteIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "YT Remote/YT_Remote.entitlements";
 				CODE_SIGN_STYLE = Automatic;
