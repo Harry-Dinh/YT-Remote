@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		21018A2E2E8095A90094E49A /* YT Remote Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "YT Remote Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		21018A2E2E8095A90094E49A /* Remote Receiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Remote Receiver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2198BAEF2E65412300FD5FD8 /* YT Remote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "YT Remote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -55,7 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				2198BAEF2E65412300FD5FD8 /* YT Remote.app */,
-				21018A2E2E8095A90094E49A /* YT Remote Client.app */,
+				21018A2E2E8095A90094E49A /* Remote Receiver.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,9 +63,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		21018A2D2E8095A90094E49A /* YT Remote Client */ = {
+		21018A2D2E8095A90094E49A /* Remote Receiver */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 21018A382E8095AB0094E49A /* Build configuration list for PBXNativeTarget "YT Remote Client" */;
+			buildConfigurationList = 21018A382E8095AB0094E49A /* Build configuration list for PBXNativeTarget "Remote Receiver" */;
 			buildPhases = (
 				21018A2A2E8095A90094E49A /* Sources */,
 				21018A2B2E8095A90094E49A /* Frameworks */,
@@ -78,11 +78,11 @@
 			fileSystemSynchronizedGroups = (
 				21018A2F2E8095A90094E49A /* YT Remote Client */,
 			);
-			name = "YT Remote Client";
+			name = "Remote Receiver";
 			packageProductDependencies = (
 			);
 			productName = "YT Remote Client";
-			productReference = 21018A2E2E8095A90094E49A /* YT Remote Client.app */;
+			productReference = 21018A2E2E8095A90094E49A /* Remote Receiver.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2198BAEE2E65412300FD5FD8 /* YT Remote */ = {
@@ -140,7 +140,7 @@
 			projectRoot = "";
 			targets = (
 				2198BAEE2E65412300FD5FD8 /* YT Remote */,
-				21018A2D2E8095A90094E49A /* YT Remote Client */,
+				21018A2D2E8095A90094E49A /* Remote Receiver */,
 			);
 		};
 /* End PBXProject section */
@@ -204,6 +204,7 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Remote Receiver";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -249,6 +250,7 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Remote Receiver";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -477,7 +479,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		21018A382E8095AB0094E49A /* Build configuration list for PBXNativeTarget "YT Remote Client" */ = {
+		21018A382E8095AB0094E49A /* Build configuration list for PBXNativeTarget "Remote Receiver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				21018A362E8095AB0094E49A /* Debug */,
