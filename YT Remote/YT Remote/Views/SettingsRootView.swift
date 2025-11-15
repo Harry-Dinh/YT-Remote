@@ -19,17 +19,11 @@ struct SettingsRootView: View {
     var body: some View {
         NavigationStack {
             Form {
+                connectionHeader
+                
                 Section {
-                    connectionHeader
-
-                    NavigationLink(destination: QRCodeScannerView(viewModel)) {
-                        Text("Connect to Mac")
-                    }
-                }
-
-                Section {
+                    connectToMacButton
                     disconnectButton
-                    quitYouTubeButton
                 }
 
                 Section {
@@ -76,6 +70,12 @@ struct SettingsRootView: View {
                 Text(isMacIPEmpty ? "Not Connected" : "Connected to Mac")
                     .foregroundStyle(.secondary)
             }
+        }
+    }
+    
+    private var connectToMacButton: some View {
+        NavigationLink(destination: ConnectionsList(viewModel)) {
+            Text("Connect to Mac")
         }
     }
 

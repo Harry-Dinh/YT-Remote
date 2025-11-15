@@ -41,7 +41,7 @@ struct ContentView: View {
                 actionButtons
                     .disabled(viewModel.macIP.isEmpty)
             }
-            .sheet(isPresented: $showSettingsScreen) {
+            .fullScreenCover(isPresented: $showSettingsScreen) {
                 SettingsRootView(viewModel)
             }
             .alert(
