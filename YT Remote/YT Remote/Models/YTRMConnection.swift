@@ -11,8 +11,25 @@ enum YTRMDeepLinkComponent {
     case passcode
 }
 
-struct YTRMConnection: Equatable {
+import Foundation
+
+struct YTRMConnection: Equatable, Codable, Identifiable {
+    var id: String
     var ip: String
     var port: String
     var passcode: String
+    var name: String
+    
+    init(id: String = UUID().uuidString,
+         ip: String,
+         port: String,
+         passcode: String,
+         name: String = "Unnamed Connection"
+    ) {
+        self.id = id
+        self.ip = ip
+        self.port = port
+        self.passcode = passcode
+        self.name = name
+    }
 }

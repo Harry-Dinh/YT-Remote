@@ -10,14 +10,21 @@ import Observation
 
 @Observable
 class MainViewModel {
+    // Settings
     var showVolumeControls = true
     var volumeControlsPosition: VolumeControlsPosition = .right
+    var showManualConnectionScreen = false
+    var showDisconnectConfirmation = false
     var macIP = ""
+//    var passcode = ""
+    var customPortNumber = ""
+    var connectionName = ""
+    
+    // Home
     var showKeyboardSearchAlert = false
     var searchText = ""
-    var showDisconnectConfirmation = false
-    var showManualConnectionScreen = false
-    var passcode = ""
-    var customPortNumber = ""
+    
+    // View models
     var currentConnection: YTRMConnection?
+    var connectionsList: [YTRMConnection] = []
 }
