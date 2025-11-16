@@ -19,7 +19,16 @@ struct ConnectionsList: View {
     
     var body: some View {
         List {
-            connectionsList
+            Section("Previous Connections") {
+                if viewModel.connectionsList.isEmpty {
+                    connectionEmptyText
+                        .listRowBackground(Color.clear)
+                } else {
+                    ForEach(viewModel.connectionsList) { connection in
+                        connectionItemRow(connection)
+                    }
+                }
+            }
         }
         .navigationTitle("Connect to Mac")
         .navigationBarTitleDisplayMode(.inline)
@@ -36,20 +45,7 @@ struct ConnectionsList: View {
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
                 addConnectionMenuButton
-                EditButton()
-            }
-        }
-    }
-    
-    private var connectionsList: some View {
-        Section("Previous Connections") {
-            if viewModel.connectionsList.isEmpty {
-                connectionEmptyText
-                    .listRowBackground(Color.clear)
-            } else {
-                ForEach(viewModel.connectionsList) { connection in
-                    connectionItemRow(connection)
-                }
+                editButton
             }
         }
     }
@@ -76,6 +72,11 @@ struct ConnectionsList: View {
         } label: {
             Label("Add New Connection", systemImage: "plus")
         }
+    }
+    
+    private var editButton: some View {
+        EditButton()
+            .disabled(viewModel.connectionsList.isEmpty)
     }
     
     private var connectionEmptyText: some View {

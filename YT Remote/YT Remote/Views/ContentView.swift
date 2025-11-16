@@ -63,6 +63,9 @@ struct ContentView: View {
             } message: {
                 Text("Make sure you are on the YouTube search page before tapping the \"Send to Mac\" button.")
             }
+            .task {
+                await viewModel.getConnectionList()
+            }
         }
     }
 

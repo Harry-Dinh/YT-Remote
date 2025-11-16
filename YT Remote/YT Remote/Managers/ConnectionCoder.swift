@@ -16,7 +16,18 @@ class ConnectionCoder {
         return try? JSONEncoder().encode(connectionsList)
     }
     
+    func decode(listData: Data) async -> [YTRMConnection]? {
+        return try? JSONDecoder().decode([YTRMConnection].self, from: listData)
+    }
+    
     func saveToStorage(connectionListData: Data) {
         UserDefaults.standard.set(connectionListData, forKey: Constants.connectionListDataKey)
+    }
+    
+    func getListData() -> Data? {
+        guard let listData = UserDefaults.standard.value(forKey: Constants.connectionListDataKey) as? Data else {
+            return nil
+        }
+        return listData
     }
 }
