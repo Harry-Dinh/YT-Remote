@@ -19,7 +19,16 @@ struct ConnectionsList: View {
     
     var body: some View {
         List {
-            connectionsList
+            Section("Previous Connections") {
+                if viewModel.connectionsList.isEmpty {
+                    connectionEmptyText
+                        .listRowBackground(Color.clear)
+                } else {
+                    ForEach(viewModel.connectionsList) { connection in
+                        connectionItemRow(connection)
+                    }
+                }
+            }
         }
         .navigationTitle("Connect to Mac")
         .navigationBarTitleDisplayMode(.inline)
@@ -33,23 +42,28 @@ struct ConnectionsList: View {
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
         }
-        .toolbar {
-            ToolbarItemGroup(placement: .primaryAction) {
-                addConnectionMenuButton
-                EditButton()
-            }
+        .refreshable {
+            Task { await viewModel.getConnectionList() }
         }
-    }
-    
-    private var connectionsList: some View {
-        Section("Previous Connections") {
-            if viewModel.connectionsList.isEmpty {
-                connectionEmptyText
-                    .listRowBackground(Color.clear)
+        .toolbar {
+            if #available(iOS 26, *) {
+                DefaultToolbarItem(kind: .search, placement: .bottomBar)
+            }
+            
+            ToolbarItemGroup(placement: .primaryAction) {
+                editButton
+            }
+            
+            if #available(iOS 26, *) {
+                ToolbarSpacer(.flexible, placement: .bottomBar)
             } else {
-                ForEach(viewModel.connectionsList) { connection in
-                    connectionItemRow(connection)
+                ToolbarItem(placement: .bottomBar) {
+                    Spacer()
                 }
+            }
+            
+            ToolbarItem(placement: .bottomBar) {
+                addConnectionMenuButton
             }
         }
     }
@@ -76,6 +90,11 @@ struct ConnectionsList: View {
         } label: {
             Label("Add New Connection", systemImage: "plus")
         }
+    }
+    
+    private var editButton: some View {
+        EditButton()
+            .disabled(viewModel.connectionsList.isEmpty)
     }
     
     private var connectionEmptyText: some View {

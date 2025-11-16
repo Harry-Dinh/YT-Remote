@@ -20,11 +20,12 @@ struct YTRMConnection: Equatable, Codable, Identifiable {
     var passcode: String
     var name: String
     
-    init(id: String = UUID().uuidString,
-         ip: String,
-         port: String,
-         passcode: String,
-         name: String = "Unnamed Connection"
+    init(
+        id: String = UUID().uuidString,
+        ip: String,
+        port: String,
+        passcode: String,
+        name: String = "Unnamed Connection"
     ) {
         self.id = id
         self.ip = ip
