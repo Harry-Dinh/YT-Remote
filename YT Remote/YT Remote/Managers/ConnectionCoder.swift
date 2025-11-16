@@ -17,6 +17,6 @@ class ConnectionCoder {
     }
     
     func saveToStorage(connectionListData: Data) {
-        UserDefaults.standard.set(connectionListData, forKey: "connectionListDataKey")
+        UserDefaults.standard.set(connectionListData, forKey: Constants.connectionListDataKey)
     }
 }

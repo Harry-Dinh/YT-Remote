@@ -26,6 +26,11 @@
 			path = "YT Remote";
 			sourceTree = "<group>";
 		};
+		21EF0BA42EC94C830095945F /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +55,7 @@
 		2198BAE62E65412300FD5FD8 = {
 			isa = PBXGroup;
 			children = (
+				21EF0BA42EC94C830095945F /* Shared */,
 				2198BAF12E65412300FD5FD8 /* YT Remote */,
 				21018A2F2E8095A90094E49A /* YT Remote Client */,
 				2198BAF02E65412300FD5FD8 /* Products */,
@@ -82,6 +88,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				21018A2F2E8095A90094E49A /* YT Remote Client */,
+				21EF0BA42EC94C830095945F /* Shared */,
 			);
 			name = "YT Remote Client";
 			packageProductDependencies = (
@@ -104,6 +111,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				2198BAF12E65412300FD5FD8 /* YT Remote */,
+				21EF0BA42EC94C830095945F /* Shared */,
 			);
 			name = "YT Remote";
 			packageProductDependencies = (
