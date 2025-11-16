@@ -28,6 +28,10 @@ struct SettingsRootView: View {
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    aboutThisAppButton
+                }
+                
                 ToolbarItem(placement: .primaryAction) {
                     doneButton
                 }
@@ -93,7 +97,7 @@ struct SettingsRootView: View {
     
     private var savedConnectionsButton: some View {
         NavigationLink(destination: ConnectionsList(viewModel)) {
-            Text("Connect to Mac")
+            Label("Connect to Mac", systemImage: "rectangle.connected.to.line.below")
         }
     }
 
@@ -120,6 +124,12 @@ struct SettingsRootView: View {
     private var quitYouTubeButton: some View {
         Button(role: .destructive, action: {}) {
             Text("Exit YouTube TV")
+        }
+    }
+    
+    private var aboutThisAppButton: some View {
+        NavigationLink(destination: EmptyView()) {
+            Label("About This App", systemImage: "info")
         }
     }
 
