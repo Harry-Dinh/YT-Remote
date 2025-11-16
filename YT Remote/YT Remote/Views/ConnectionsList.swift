@@ -19,7 +19,7 @@ struct ConnectionsList: View {
     
     var body: some View {
         List {
-            Section("Previous Connections") {
+            Section("Saved Connections") {
                 if viewModel.connectionsList.isEmpty {
                     connectionEmptyText
                         .listRowBackground(Color.clear)
