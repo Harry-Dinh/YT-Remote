@@ -12,6 +12,7 @@ struct ConnectionsList: View {
     
     @State private var showQRCodeScanner = false
     @State private var showManualConnectionView = false
+    @State private var selectedConnectionList = 0
     
     init(_ viewModel: MainViewModel) {
         self.viewModel = viewModel
@@ -19,15 +20,10 @@ struct ConnectionsList: View {
     
     var body: some View {
         List {
-            Section("Previous Connections") {
-                if viewModel.connectionsList.isEmpty {
-                    connectionEmptyText
-                        .listRowBackground(Color.clear)
-                } else {
-                    ForEach(viewModel.connectionsList) { connection in
-                        connectionItemRow(connection)
-                    }
-                }
+            connectionListPicker
+
+            if selectedConnectionList == 0 {
+                savedConnectionSection
             }
         }
         .navigationTitle("Connect to Mac")
@@ -68,6 +64,19 @@ struct ConnectionsList: View {
         }
     }
     
+    private var savedConnectionSection: some View {
+        Section("Saved Connections") {
+            if viewModel.connectionsList.isEmpty {
+                connectionEmptyText
+                    .listRowBackground(Color.clear)
+            } else {
+                ForEach(viewModel.connectionsList) { connection in
+                    connectionItemRow(connection)
+                }
+            }
+        }
+    }
+    
     // MARK: - Subviews
     
     private func connectionItemRow(_ connection: YTRMConnection) -> some View {
@@ -104,6 +113,18 @@ struct ConnectionsList: View {
                 .font(.title2)
                 .foregroundStyle(.secondary)
             Spacer()
+        }
+    }
+    
+    private var connectionListPicker: some View {
+        Section {
+            Picker(selection: $selectedConnectionList) {
+                Text("Saved").tag(0)
+                Text("History").tag(1)
+            } label: {
+                EmptyView()
+            }
+            .pickerStyle(.segmented)
         }
     }
 }

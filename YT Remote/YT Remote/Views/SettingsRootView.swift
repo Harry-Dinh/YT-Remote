@@ -15,31 +15,15 @@ struct SettingsRootView: View {
     init(_ viewModel: MainViewModel) {
         self.viewModel = viewModel
     }
+    
+    // MARK: - Main Views
 
     var body: some View {
         NavigationStack {
             Form {
-                connectionHeader
-                
-                Section {
-                    connectToMacButton
-                    disconnectButton
-                }
-
-                Section {
-                    Toggle(isOn: $viewModel.showVolumeControls) {
-                        Text("Show Volume Controls")
-                    }
-
-                    if viewModel.showVolumeControls {
-                        Picker(selection: $viewModel.volumeControlsPosition) {
-                            Text("Left").tag(VolumeControlsPosition.left)
-                            Text("Right").tag(VolumeControlsPosition.right)
-                        } label: {
-                            Text("Volume Controls Position")
-                        }
-                    }
-                }
+                statusSection
+                connectSection
+                volumeControlSection
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
@@ -50,6 +34,40 @@ struct SettingsRootView: View {
             }
         }
     }
+    
+    private var statusSection: some View {
+        Section {
+            connectionHeader
+            if !viewModel.macIP.isEmpty {
+                disconnectButton
+            }
+        }
+    }
+    
+    private var connectSection: some View {
+        Section {
+            savedConnectionsButton
+        }
+    }
+    
+    private var volumeControlSection: some View {
+        Section {
+            Toggle(isOn: $viewModel.showVolumeControls) {
+                Text("Show Volume Controls")
+            }
+
+            if viewModel.showVolumeControls {
+                Picker(selection: $viewModel.volumeControlsPosition) {
+                    Text("Left").tag(VolumeControlsPosition.left)
+                    Text("Right").tag(VolumeControlsPosition.right)
+                } label: {
+                    Text("Volume Controls Position")
+                }
+            }
+        }
+    }
+    
+    // MARK: - Subviews
 
     private var doneButton: some View {
         Button(action: dismiss.callAsFunction) {
@@ -73,7 +91,7 @@ struct SettingsRootView: View {
         }
     }
     
-    private var connectToMacButton: some View {
+    private var savedConnectionsButton: some View {
         NavigationLink(destination: ConnectionsList(viewModel)) {
             Text("Connect to Mac")
         }
@@ -83,7 +101,7 @@ struct SettingsRootView: View {
         Button(role: .destructive, action: {
             viewModel.showDisconnectConfirmation = true
         }) {
-            Text("Disconnect from Mac")
+            Text("Disconnect")
         }
         .disabled(isMacIPEmpty)
         .confirmationDialog("Disconnect from Mac?", isPresented: $viewModel.showDisconnectConfirmation) {
