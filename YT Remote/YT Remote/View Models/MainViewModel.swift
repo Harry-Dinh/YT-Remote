@@ -29,6 +29,12 @@ class MainViewModel {
     var connectionsList: [YTRMConnection] = []
     
     func getConnectionList() async {
+        if !connectionsList.isEmpty {
+            await MainActor.run {
+                self.connectionsList.removeAll()
+            }
+        }
+        
         guard let connectionListData = ConnectionCoder.shared.getListData(),
               let connectionsList = await ConnectionCoder.shared.decode(listData: connectionListData) else {
             return

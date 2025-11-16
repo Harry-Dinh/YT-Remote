@@ -42,10 +42,28 @@ struct ConnectionsList: View {
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
         }
+        .refreshable {
+            Task { await viewModel.getConnectionList() }
+        }
         .toolbar {
+            if #available(iOS 26, *) {
+                DefaultToolbarItem(kind: .search, placement: .bottomBar)
+            }
+            
             ToolbarItemGroup(placement: .primaryAction) {
-                addConnectionMenuButton
                 editButton
+            }
+            
+            if #available(iOS 26, *) {
+                ToolbarSpacer(.flexible, placement: .bottomBar)
+            } else {
+                ToolbarItem(placement: .bottomBar) {
+                    Spacer()
+                }
+            }
+            
+            ToolbarItem(placement: .bottomBar) {
+                addConnectionMenuButton
             }
         }
     }
