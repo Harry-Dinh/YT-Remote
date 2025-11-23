@@ -10,10 +10,12 @@ import SwiftUI
 @main
 struct YT_Remote_ClientApp: App {
     @State private var serverManager = ServerManager()
+    @State private var settingsViewModel = SettingsViewModel()
 
     var body: some Scene {
         Window(Text(Constants.appName), id: "mainwindow") {
             ContentView(serverManager)
+                .onAppear(perform: settingsViewModel.fetchSavedSettings)
         }
         .windowResizability(.contentSize)
         .commands {
@@ -33,6 +35,10 @@ struct YT_Remote_ClientApp: App {
                 }
                 .disabled(!serverManager.startListening)
             }
+        }
+        
+        Settings {
+            RemoteReceiverSettingsView(settingsViewModel)
         }
     }
 }
