@@ -25,9 +25,6 @@ class ConnectionCoder {
     }
     
     func getListData() -> Data? {
-        guard let listData = UserDefaults.standard.value(forKey: Constants.connectionListDataKey) as? Data else {
-            return nil
-        }
-        return listData
+        return UserDefaults.standard.value(forKey: Constants.connectionListDataKey) as? Data
     }
 }

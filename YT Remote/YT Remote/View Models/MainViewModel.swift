@@ -11,7 +11,7 @@ import Observation
 @Observable
 class MainViewModel {
     // Settings
-    var showVolumeControls = true
+    var showVolumeControls = false
     var volumeControlsPosition: VolumeControlsPosition = .right
     var showManualConnectionScreen = false
     var showDisconnectConfirmation = false
@@ -43,5 +43,11 @@ class MainViewModel {
         await MainActor.run {
             self.connectionsList = connectionsList
         }
+    }
+    
+    func connectToDevice(with connection: YTRMConnection) {
+        currentConnection = connection
+        macIP = connection.ip
+        customPortNumber = connection.port
     }
 }
