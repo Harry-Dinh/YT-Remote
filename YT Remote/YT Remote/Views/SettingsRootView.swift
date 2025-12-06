@@ -28,10 +28,6 @@ struct SettingsRootView: View {
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    aboutThisAppButton
-                }
-                
                 ToolbarItem(placement: .primaryAction) {
                     doneButton
                 }
@@ -124,12 +120,6 @@ struct SettingsRootView: View {
     private var quitYouTubeButton: some View {
         Button(role: .destructive, action: {}) {
             Text("Exit YouTube TV")
-        }
-    }
-    
-    private var aboutThisAppButton: some View {
-        NavigationLink(destination: EmptyView()) {
-            Label("About This App", systemImage: "info")
         }
     }
 

@@ -1,5 +1,5 @@
 //
-//  Signal Sender.swift
+//  SignalSender.swift
 //  YT Remote
 //
 //  Created by Harry Dinh on 2025-09-21.
@@ -8,16 +8,15 @@
 import Foundation
 
 class SignalSender {
-    let macIP: String
-    let port: Int
+    var connection: YTRMConnection?
 
-    init(macIP: String, port: Int = 8080) {
-        self.macIP = macIP
-        self.port = port
+    init(connection: YTRMConnection?) {
+        self.connection = connection
     }
 
     func send(signal: String) {
-        guard let url = URL(string: "http://\(macIP):\(port)/signal/\(signal.uppercased())") else {
+        guard let connection = self.connection,
+              let url = URL(string: String(format: Constants.connectionURLScheme, connection.ip, connection.port, signal)) else {
             print("Invalid URL")
             return
         }

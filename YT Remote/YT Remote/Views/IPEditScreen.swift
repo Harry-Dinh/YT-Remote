@@ -68,11 +68,13 @@ struct IPEditScreen: View {
     
     private var connectionNameSection: some View {
         Section {
-            Toggle("Save Connection to Storage", isOn: $showNameTextField)
+            Toggle("Save Connection", isOn: $showNameTextField)
             
             if showNameTextField {
                 TextField("Connection name", text: $viewModel.connectionName)
             }
+        } footer: {
+            Text("Saving allows you to quickly connect in the future.")
         }
     }
 

@@ -25,14 +25,23 @@ struct ConnectionsList: View {
                         .listRowBackground(Color.clear)
                 } else {
                     ForEach(viewModel.connectionsList) { connection in
-                        connectionItemRow(connection)
+                        ConnectionListRowView(connection: connection) {
+                            viewModel.connectToDevice(with: connection)
+                        }
                     }
                 }
             }
         }
         .navigationTitle("Connect to Mac")
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: .constant(""), placement: .navigationBarDrawer(displayMode: .always), prompt: "Search")
+        .searchable(
+            text: .constant(""),
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt: "Search"
+        )
+        .refreshable {
+            Task { await viewModel.getConnectionList() }
+        }
         .sheet(isPresented: $showQRCodeScanner) {
             QRCodeScannerView(viewModel)
                 .presentationDetents([.medium])
@@ -41,9 +50,6 @@ struct ConnectionsList: View {
             IPEditScreen(viewModel)
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
-        }
-        .refreshable {
-            Task { await viewModel.getConnectionList() }
         }
         .toolbar {
             if #available(iOS 26, *) {
@@ -69,10 +75,6 @@ struct ConnectionsList: View {
     }
     
     // MARK: - Subviews
-    
-    private func connectionItemRow(_ connection: YTRMConnection) -> some View {
-        Label(connection.name, systemImage: "laptopcomputer")
-    }
     
     private var addConnectionMenuButton: some View {
         Menu {

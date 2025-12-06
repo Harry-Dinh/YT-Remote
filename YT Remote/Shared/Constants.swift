@@ -6,6 +6,7 @@
 //
 
 final class Constants {
-    // MARK: - KEYS
     static let connectionListDataKey = "connectionListDataKey"
+    
+    static let connectionURLScheme = "http://%@:%@/signal/%@"
 }

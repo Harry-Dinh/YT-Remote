@@ -17,9 +17,9 @@ struct ContentView: View {
         NavigationStack {
             VStack {
                 navigationButtons
-                    .disabled(viewModel.macIP.isEmpty)
+                    .disabled(viewModel.currentConnection == nil)
             }
-            .navigationTitle(viewModel.macIP.isEmpty ? "Not Connected" : "")
+            .navigationTitle(viewModel.currentConnection == nil ? "Not Connected" : "")
             .toolbarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -37,7 +37,7 @@ struct ContentView: View {
             }
             .safeAreaInset(edge: .bottom) {
                 actionButtons
-                    .disabled(viewModel.macIP.isEmpty)
+                    .disabled(viewModel.currentConnection == nil)
             }
             .fullScreenCover(isPresented: $showSettingsScreen) {
                 SettingsRootView(viewModel)
@@ -96,11 +96,12 @@ struct ContentView: View {
 
     private var actionButtons: some View {
         HStack {
+            Spacer()
             ActionButton(.playPauseButton) { sender.send(signal: ActionButtonSignal.playPause) }
             Spacer()
             ActionButton(.backButton) { sender.send(signal: ActionButtonSignal.back) }
             Spacer()
-            ActionButton(.contextMenuButton) {}
+//            ActionButton(.contextMenuButton) {}
         }
         .padding(.horizontal)
     }
@@ -165,7 +166,7 @@ struct ContentView: View {
         }) {
             Label("Disconnect", systemImage: "rectangle.portrait.and.arrow.right")
         }
-        .disabled(viewModel.macIP.isEmpty)
+        .disabled(viewModel.currentConnection == nil)
     }
     
     private var moreMenu: some View {
@@ -181,7 +182,9 @@ struct ContentView: View {
             titleVisibility: .visible
         ) {
             Button(role: .destructive) {
+                viewModel.currentConnection = nil
                 viewModel.macIP.removeAll()
+                viewModel.customPortNumber.removeAll()
             } label: {
                 Text("Disconnect")
             }
@@ -195,7 +198,7 @@ struct ContentView: View {
     // MARK: - Helper Functions and Properties
 
     private var sender: SignalSender {
-        SignalSender(macIP: viewModel.macIP)
+        SignalSender(connection: viewModel.currentConnection)
     }
 }
 

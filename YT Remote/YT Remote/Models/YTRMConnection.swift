@@ -33,4 +33,6 @@ struct YTRMConnection: Equatable, Codable, Identifiable {
         self.passcode = passcode
         self.name = name
     }
+    
+    static let previewPlaceholder = YTRMConnection(id: "000000", ip: "0.0.0.0", port: "8080", passcode: "", name: "Placeholder")
 }
