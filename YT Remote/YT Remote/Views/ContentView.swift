@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var viewModel = MainViewModel()
+    @State private var signalSender = SignalSender()
     @State private var showSettingsScreen = false
 
     private let navButtonSpacing: CGFloat = 20.0
@@ -40,7 +41,7 @@ struct ContentView: View {
                     .disabled(viewModel.currentConnection == nil)
             }
             .fullScreenCover(isPresented: $showSettingsScreen) {
-                SettingsRootView(viewModel)
+                SettingsRootView(viewModel, signalSender)
             }
             .alert(
                 "Search YouTube Videos",
@@ -71,18 +72,18 @@ struct ContentView: View {
 
     private var navigationButtons: some View {
         VStack(spacing: navButtonSpacing) {
-            NavigationButton(.up) { sender.send(signal: NavigationButtonSignal.up) }
+            NavigationButton(.up) { signalSender.send(signal: NavigationButtonSignal.up) }
             navigationButtonsHorizontal
-            NavigationButton(.down) { sender.send(signal: NavigationButtonSignal.down) }
+            NavigationButton(.down) { signalSender.send(signal: NavigationButtonSignal.down) }
         }
         .padding()
     }
 
     private var navigationButtonsHorizontal: some View {
         HStack(spacing: navButtonSpacing) {
-            NavigationButton(.left) { sender.send(signal: NavigationButtonSignal.left) }
-            NavigationButton(.return) { sender.send(signal: NavigationButtonSignal.return) }
-            NavigationButton(.right) { sender.send(signal: NavigationButtonSignal.right) }
+            NavigationButton(.left) { signalSender.send(signal: NavigationButtonSignal.left) }
+            NavigationButton(.return) { signalSender.send(signal: NavigationButtonSignal.return) }
+            NavigationButton(.right) { signalSender.send(signal: NavigationButtonSignal.right) }
         }
     }
 
@@ -97,9 +98,9 @@ struct ContentView: View {
     private var actionButtons: some View {
         HStack {
             Spacer()
-            ActionButton(.playPauseButton) { sender.send(signal: ActionButtonSignal.playPause) }
+            ActionButton(.playPauseButton) { signalSender.send(signal: ActionButtonSignal.playPause) }
             Spacer()
-            ActionButton(.backButton) { sender.send(signal: ActionButtonSignal.back) }
+            ActionButton(.backButton) { signalSender.send(signal: ActionButtonSignal.back) }
             Spacer()
 //            ActionButton(.contextMenuButton) {}
         }
@@ -188,17 +189,11 @@ struct ContentView: View {
             } label: {
                 Text("Disconnect")
             }
-
+            
             Button(role: .cancel, action: {}) {
                 Text("Cancel")
             }
         }
-    }
-
-    // MARK: - Helper Functions and Properties
-
-    private var sender: SignalSender {
-        SignalSender(connection: viewModel.currentConnection)
     }
 }
 

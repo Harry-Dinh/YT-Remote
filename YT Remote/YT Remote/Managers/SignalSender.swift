@@ -7,16 +7,14 @@
 
 import Foundation
 
+@Observable
 class SignalSender {
-    var connection: YTRMConnection?
-
-    init(connection: YTRMConnection?) {
-        self.connection = connection
-    }
+    private var connection: YTRMConnection?
 
     func send(signal: String) {
         guard let connection = self.connection,
-              let url = URL(string: String(format: Constants.connectionURLScheme, connection.ip, connection.port, signal)) else {
+              let portInt = Int(connection.port),
+              let url = URL(string: String(format: Constants.connectionURLScheme, connection.ip, portInt, signal)) else {
             print("Invalid URL")
             return
         }
@@ -29,5 +27,9 @@ class SignalSender {
             }
         }
         task.resume()
+    }
+    
+    func setCurrentConnection(with connection: YTRMConnection) {
+        self.connection = connection
     }
 }

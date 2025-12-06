@@ -9,11 +9,13 @@ import SwiftUI
 
 struct SettingsRootView: View {
     @Bindable var viewModel: MainViewModel
+    @Bindable var signalSender: SignalSender
 
     @Environment(\.dismiss) private var dismiss
 
-    init(_ viewModel: MainViewModel) {
+    init(_ viewModel: MainViewModel, _ signalSender: SignalSender) {
         self.viewModel = viewModel
+        self.signalSender = signalSender
     }
     
     // MARK: - Main Views
@@ -83,16 +85,16 @@ struct SettingsRootView: View {
             HStack {
                 Image(systemName: "circle.fill")
                     .imageScale(.small)
-                    .foregroundStyle(isMacIPEmpty ? Color.red : Color.green)
+                    .foregroundStyle(viewModel.currentConnection == nil ? Color.red : Color.green)
 
-                Text(isMacIPEmpty ? "Not Connected" : "Connected to Mac")
+                Text(viewModel.currentConnection == nil ? "Not Connected" : "Connected to Mac")
                     .foregroundStyle(.secondary)
             }
         }
     }
     
     private var savedConnectionsButton: some View {
-        NavigationLink(destination: ConnectionsList(viewModel)) {
+        NavigationLink(destination: ConnectionsList(viewModel, signalSender)) {
             Label("Connect to Mac", systemImage: "rectangle.connected.to.line.below")
         }
     }
@@ -103,7 +105,7 @@ struct SettingsRootView: View {
         }) {
             Text("Disconnect")
         }
-        .disabled(isMacIPEmpty)
+        .disabled(viewModel.currentConnection == nil)
         .confirmationDialog("Disconnect from Mac?", isPresented: $viewModel.showDisconnectConfirmation) {
             Button(role: .destructive) {
                 viewModel.macIP.removeAll()
@@ -122,14 +124,8 @@ struct SettingsRootView: View {
             Text("Exit YouTube TV")
         }
     }
-
-    // MARK: - Helper Functions and Properties
-
-    private var isMacIPEmpty: Bool {
-        viewModel.macIP.isEmpty
-    }
 }
 
 #Preview {
-    SettingsRootView(MainViewModel())
+    SettingsRootView(MainViewModel(), SignalSender())
 }

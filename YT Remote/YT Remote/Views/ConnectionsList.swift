@@ -9,12 +9,14 @@ import SwiftUI
 
 struct ConnectionsList: View {
     @Bindable var viewModel: MainViewModel
+    @Bindable var signalSender: SignalSender
     
     @State private var showQRCodeScanner = false
     @State private var showManualConnectionView = false
     
-    init(_ viewModel: MainViewModel) {
+    init(_ viewModel: MainViewModel, _ signalSender: SignalSender) {
         self.viewModel = viewModel
+        self.signalSender = signalSender
     }
     
     var body: some View {
@@ -112,6 +114,6 @@ struct ConnectionsList: View {
 
 #Preview {
     NavigationStack {
-        ConnectionsList(MainViewModel())
+        ConnectionsList(MainViewModel(), SignalSender())
     }
 }
